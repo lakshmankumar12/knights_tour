@@ -4,8 +4,9 @@ from __future__ import print_function
 import sys
 
 tried_so_far = 0
-n_rows = 6
-n_cols = 7
+n_rows = 8
+n_cols = 8
+start_at = 0
 
 class Board:
   def __init__(self, n_rows, n_cols):
@@ -62,12 +63,18 @@ def track(board, next_moves, current_square, covered):
   return 0
 
 if __name__ == '__main__':
+  if len(sys.argv) >= 4:
+    start_at = int(sys.argv[3])
+  if len(sys.argv) >= 3:
+    n_cols = int(sys.argv[2])
+  if len(sys.argv) >= 2:
+    n_rows = int(sys.argv[1])
   b = Board(n_rows,n_cols)
   next_moves = build_next_moves(n_rows,n_cols)
   for i in range(n_rows*n_cols):
     print("next moves for %02d is %s"%(i,next_moves[i]))
-  b.board[0] = 1
-  result = track(b, next_moves, 0, 1)
+  b.board[start_at] = 1
+  result = track(b, next_moves, start_at, 1)
   if result == 1:
     print(b)
   else:
